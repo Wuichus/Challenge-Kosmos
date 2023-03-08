@@ -17,10 +17,6 @@ export default function KosmosItem({albumId, thumbnailUrl, title, url, id, Erase
   return (
     <div className='MoveableContainer'>
       <div id={id}  className='itemContainer' >
-        <a href={url}>
-          <h2 className='itemTitle'>{title}</h2>
-        </a>
-        <p className='itemText'>Album: {albumId}</p>
         <button onClick={()=>EraseItem(id)}>Click on me if you want to erase me</button>
         <div className='itemImageContainer'>
           <img src={thumbnailUrl} alt={title} className='itemImage'/>
@@ -47,7 +43,7 @@ export default function KosmosItem({albumId, thumbnailUrl, title, url, id, Erase
             
             const newX= x + actualWidth >= containerWidth  ? containerWidth - actualWidth : x < 0 ? 0 : x
             
-            const newY= actualHeight + y >= containerHeigth - 20 ? containerHeigth-actualHeight-20 : y <= -20 ? -20 : y
+            const newY= actualHeight + y >= containerHeigth ? containerHeigth-actualHeight: y <= 0 ? 0 : y
             e.beforeTranslate[0] = newX
             e.beforeTranslate[1] = newY
             e.target.style.transform = `translate(${newX}px, ${newY}px)`;
@@ -74,10 +70,10 @@ export default function KosmosItem({albumId, thumbnailUrl, title, url, id, Erase
           const y = beforeTranslate[1]
           
           const widthDiff= containerWidth - actualWidth
-          const heigthDiff= containerHeigth-actualHeight-20
+          const heigthDiff= containerHeigth-actualHeight
           
-          const newX= widthDiff - x < 0 ? widthDiff : x > 0 ? x : 0
-          const newY= y < -20 ? -20 : y > heigthDiff ? heigthDiff :  y 
+          const newX= x < 0 ? 0 : x > widthDiff ? widthDiff : x
+          const newY= y < 0 ? 0 : y > heigthDiff ? heigthDiff :  y 
 
           const isWider = containerWidth <= actualWidth
           const isHeigher = containerHeigth <= actualHeight

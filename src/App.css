@@ -1,15 +1,26 @@
 .App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
   margin: 10px;
 }
 .main{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+}
+.App-header {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: center;
 }
 .MoveableContainer {
+  display: flex;
+  height: 100%;
   border: 1px solid red;
   width: 500px;
   height: 500px;
+  margin: 2rem;
 }
 .itemContainer {
   display: flex;

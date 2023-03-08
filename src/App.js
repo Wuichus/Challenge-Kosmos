@@ -34,11 +34,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Challenge Kosmos
+        <h1>
+          Challenge Kosmos
+        </h1>
       </header>
       <main className='main'>
         {
-          data.slice(0,5).map( (item )=> <KosmosItem {...item} key={item.id} EraseItem={EraseItem}/>)
+          data.slice(0,6).map( (item )=> <KosmosItem {...item} key={item.id} EraseItem={EraseItem}/>)
         }
       </main>
     </div>
