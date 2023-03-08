@@ -10,7 +10,19 @@ export default function KosmosItem({albumId, thumbnailUrl, title, url, id, Erase
   const containerWidth= 500
   const containerHeigth = 500
 
+  const checkForX = ({ actualWidth, x }) =>{
+    const widthDiff= containerWidth - actualWidth
+    return x < 0 ? 0 : x > widthDiff ? widthDiff : x
+  }
+
+  const checkForY = ({ actualHeight, y }) =>{
+    const heigthDiff= containerHeigth - actualHeight
+
+    return y < 0 ? 0 : y > heigthDiff ? heigthDiff : y
+  }
+
   useEffect(() => {
+      //Target the element container by id to make it Moveable
       setTarget(document.getElementById(id));
   }, [id]);
 
@@ -37,15 +49,23 @@ export default function KosmosItem({albumId, thumbnailUrl, title, url, id, Erase
         onDrag={e => {
             const actualWidth= e.width
             const actualHeight= e.height
+            
             frame.translate = e.beforeTranslate;
-            const x = e.beforeTranslate[0]
-            const y = e.beforeTranslate[1]
             
-            const newX= x + actualWidth >= containerWidth  ? containerWidth - actualWidth : x < 0 ? 0 : x
+            // New position on x and y
+            let x = e.beforeTranslate[0]
+            let y = e.beforeTranslate[1]
             
-            const newY= actualHeight + y >= containerHeigth ? containerHeigth-actualHeight: y <= 0 ? 0 : y
-            e.beforeTranslate[0] = newX
-            e.beforeTranslate[1] = newY
+            // Check if is the new position in x is lower than 0 or heigher than max-width
+            const newX= checkForX({x, actualWidth})
+            
+            // Check if is the new position in y is lower than 0 or heigher than max-height
+            const newY= checkForY({y, actualHeight})
+
+            // Assign new value to beforeTranslate
+            x = newX
+            y = newY
+            
             e.target.style.transform = `translate(${newX}px, ${newY}px)`;
         }}
         //resizable
@@ -65,25 +85,32 @@ export default function KosmosItem({albumId, thumbnailUrl, title, url, id, Erase
           const beforeTranslate = e.drag.beforeTranslate;
           
           frame.translate = beforeTranslate;
-          
+          // New position on x and y
           const x = beforeTranslate[0]
           const y = beforeTranslate[1]
           
-          const widthDiff= containerWidth - actualWidth
-          const heigthDiff= containerHeigth-actualHeight
-          
-          const newX= x < 0 ? 0 : x > widthDiff ? widthDiff : x
-          const newY= y < 0 ? 0 : y > heigthDiff ? heigthDiff :  y 
+          // Check if is the new position in x is lower than 0 or heigher than max-width
+          const newX= checkForX({x, actualWidth})
 
+          // Check if is the new position in y is lower than 0 or heigher than max-height
+          const newY= checkForY({y, actualHeight})
+
+          // Check if the new container is wider than max-width
           const isWider = containerWidth <= actualWidth
+          
+          // Check if the new container is heigher than max-height
           const isHeigher = containerHeigth <= actualHeight
           
+          // Assign new width 
           e.target.style.width = `${isWider? containerWidth : e.width}px`;
-
+          
+          // Assign new height 
           e.target.style.height = `${isHeigher ? containerHeigth: e.height}px`;
           
+          // Transform to new position without getting out of the container
           e.target.style.transform = `translate(${newX}px, ${newY}px)`;
-
+          
+          // Assign new value to beforeTranslate
           e.drag.beforeTranslate[0] = newX
           e.drag.beforeTranslate[1] = newY
 
