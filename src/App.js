@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import KosmosItem from './components/KosmosItem';
 //css
-import './App.css';
+import './css/App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -35,7 +35,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>
-          Challenge Kosmos
+          Challenge Kosmos by <strong>Gerardo López Cárdenas</strong>
         </h1>
       </header>
       <main className='main'>

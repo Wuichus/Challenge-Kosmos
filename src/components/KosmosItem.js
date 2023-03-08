@@ -29,10 +29,10 @@ export default function KosmosItem({albumId, thumbnailUrl, title, url, id, Erase
   return (
     <div className='MoveableContainer'>
       <div id={id}  className='itemContainer' >
-        <button onClick={()=>EraseItem(id)}>Click on me if you want to erase me</button>
         <div className='itemImageContainer'>
           <img src={thumbnailUrl} alt={title} className='itemImage'/>
         </div>
+        <button onClick={()=>EraseItem(id)}>Click on me if you want to erase me</button>
       </div>
       <Moveable
         target={target}
